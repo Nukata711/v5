@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=393, initial-scale=1.0">
+  <title>艺术家专区</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 rounded-3xl overflow-hidden" style="width:393px;height:600px;">
+  <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+    <span class="text-lg font-bold text-red-600">艺术家专区</span>
+    <button class="text-gray-500"><i class="fa-solid fa-user-pen fa-lg"></i></button>
+  </div>
+  <div class="overflow-y-auto h-[500px] pb-4">
+    <!-- 艺术家卡片1 -->
+    <div class="bg-white rounded-2xl shadow mb-4 mx-3 flex items-center p-4">
+      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="艺术家1" class="w-16 h-16 rounded-full object-cover mr-4">
+      <div class="flex-1">
+        <div class="font-semibold text-lg">李明</div>
+        <div class="text-gray-500 text-sm mt-1">景德镇陶瓷艺术家，擅长青花瓷创新。</div>
+      </div>
+      <button class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fa-solid fa-plus mr-1"></i>关注</button>
+    </div>
+    <!-- 艺术家卡片2 -->
+    <div class="bg-white rounded-2xl shadow mb-4 mx-3 flex items-center p-4">
+      <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="艺术家2" class="w-16 h-16 rounded-full object-cover mr-4">
+      <div class="flex-1">
+        <div class="font-semibold text-lg">王芳</div>
+        <div class="text-gray-500 text-sm mt-1">现代陶艺家，作品多次获奖。</div>
+      </div>
+      <button class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fa-solid fa-plus mr-1"></i>关注</button>
+    </div>
+  </div>
+  <div class="h-14"></div>
+</body>
+</html> 

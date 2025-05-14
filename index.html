@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=393, initial-scale=1.0">
+  <title>瓷天下 - 原型平铺</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: #f3f4f6;
+      font-family: 'SF Pro Display', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+    }
+    .iphone-frame {
+      width: 393px;
+      height: 852px;
+      border-radius: 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      background: #fff;
+      margin: 40px auto;
+      overflow: hidden;
+      border: 1.5px solid #e5e7eb;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      transition: box-shadow 0.2s;
+    }
+    .iphone-frame:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+    }
+    .status-bar {
+      height: 44px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      font-size: 16px;
+      color: #222;
+      border-bottom: 1px solid #f3f4f6;
+      letter-spacing: 0.5px;
+    }
+    .nav-bar {
+      height: 56px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #f3f4f6;
+      font-weight: 600;
+      font-size: 20px;
+      color: #d32d2f;
+      letter-spacing: 0.5px;
+    }
+    .nav-bar .nav-btn {
+      color: #888;
+      font-size: 20px;
+      background: none;
+      border: none;
+      outline: none;
+      padding: 0 4px;
+      transition: color 0.2s;
+    }
+    .nav-bar .nav-btn:active,
+    .nav-bar .nav-btn:focus {
+      color: #d32d2f;
+    }
+    .tab-bar {
+      height: 60px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-top: 1.5px solid #f3f4f6;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    .tab-bar .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #b0b0b0;
+      font-size: 13px;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .tab-bar .tab-item.active {
+      color: #d32d2f;
+    }
+    .tab-bar i {
+      font-size: 22px;
+    }
+    .tab-bar span {
+      font-size: 12px;
+      display: block;
+      margin-top: 2px;
+    }
+    .content-area {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      background: #f9fafb;
+      padding-bottom: 60px;
+      padding-top: 0;
+    }
+    .btn-main {
+      background: #d32d2f;
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      outline: none;
+      transition: background 0.2s;
+    }
+    .btn-main:active,
+    .btn-main:focus {
+      background: #b71c1c;
+    }
+    .btn-outline {
+      background: #fff;
+      color: #d32d2f;
+      border: 1.5px solid #d32d2f;
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline:active,
+    .btn-outline:focus {
+      background: #d32d2f;
+      color: #fff;
+    }
+    .input-main, .select-main, .textarea-main {
+      width: 100%;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 15px;
+      margin-bottom: 14px;
+      background: #fafbfc;
+      transition: border 0.2s;
+      outline: none;
+    }
+    .input-main:focus, .select-main:focus, .textarea-main:focus {
+      border: 1.5px solid #d32d2f;
+      background: #fff;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin-bottom: 18px;
+      padding: 18px 16px;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    }
+    .card-img {
+      border-radius: 16px;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #f3f4f6;
+      margin-right: 10px;
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      color: #b0b0b0;
+      font-size: 20px;
+      margin: 0 4px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .icon-btn.active, .icon-btn:active, .icon-btn:focus {
+      color: #d32d2f;
+    }
+    .tag {
+      display: inline-block;
+      background: #f3f4f6;
+      color: #888;
+      border-radius: 8px;
+      font-size: 12px;
+      padding: 2px 10px;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    /* 滚动条美化 */
+    .content-area::-webkit-scrollbar {
+      width: 6px;
+      background: #f3f4f6;
+    }
+    .content-area::-webkit-scrollbar-thumb {
+      background: #e5e7eb;
+      border-radius: 6px;
+    }
+    /* 按钮悬停 */
+    .btn-main:hover, .btn-outline:hover {
+      filter: brightness(0.95);
+    }
+  </style>
+</head>
+<body>
+  <div class="flex flex-col items-center gap-8 py-8">
+    <!-- 首页 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <!-- 顶部导航栏 -->
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-xl font-bold text-red-600">瓷天下</span>
+          <button class="text-gray-500"><i class="fa-solid fa-share-nodes fa-lg"></i></button>
+        </div>
+        <!-- Feed流 -->
+        <div class="overflow-y-auto h-[500px] pb-4">
+          <!-- 商品卡片1 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="瓷器1" class="rounded-t-2xl w-full h-48 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">青花瓷瓶</div>
+              <div class="text-gray-500 text-sm mt-1">明代青花瓷，釉色温润，纹饰精美。</div>
+              <div class="flex items-center justify-between mt-3 text-gray-400">
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center"><i class="fa-regular fa-heart mr-1"></i> 128</span>
+                  <span class="flex items-center"><i class="fa-regular fa-comment mr-1"></i> 23</span>
+                </div>
+                <button><i class="fa-solid fa-share"></i></button>
+              </div>
+            </div>
+          </div>
+          <!-- 商品卡片2 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="瓷器2" class="rounded-t-2xl w-full h-48 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">粉彩花卉盘</div>
+              <div class="text-gray-500 text-sm mt-1">清代粉彩，色彩艳丽，花卉繁盛。</div>
+              <div class="flex items-center justify-between mt-3 text-gray-400">
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center"><i class="fa-regular fa-heart mr-1"></i> 89</span>
+                  <span class="flex items-center"><i class="fa-regular fa-comment mr-1"></i> 12</span>
+                </div>
+                <button><i class="fa-solid fa-share"></i></button>
+              </div>
+            </div>
+          </div>
+          <!-- 商品卡片3 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="瓷器3" class="rounded-t-2xl w-full h-48 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">景德镇瓷杯</div>
+              <div class="text-gray-500 text-sm mt-1">现代工艺，简约雅致，适合日常品茗。</div>
+              <div class="flex items-center justify-between mt-3 text-gray-400">
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center"><i class="fa-regular fa-heart mr-1"></i> 56</span>
+                  <span class="flex items-center"><i class="fa-regular fa-comment mr-1"></i> 7</span>
+                </div>
+                <button><i class="fa-solid fa-share"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 推荐/搜索页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <input type="text" class="w-full rounded-full border px-4 py-2 text-sm bg-gray-100" placeholder="搜索瓷器 艺术家 风格...">
+        </div>
+        <div class="flex gap-4 px-4 py-3 bg-white">
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl">🏺</div>
+            <span class="text-xs mt-1">花瓶</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl">☕</div>
+            <span class="text-xs mt-1">茶具</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl">🎨</div>
+            <span class="text-xs mt-1">彩绘</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl">🔥</div>
+            <span class="text-xs mt-1">窑变</span>
+          </div>
+        </div>
+        <div class="px-4 py-2 font-bold text-lg">推荐作品</div>
+        <div class="grid grid-cols-3 gap-2 px-4">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="rounded-xl w-full h-28 object-cover"/>
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="rounded-xl w-full h-28 object-cover"/>
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="rounded-xl w-full h-28 object-cover"/>
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="rounded-xl w-full h-28 object-cover"/>
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="rounded-xl w-full h-28 object-cover"/>
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="rounded-xl w-full h-28 object-cover"/>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center text-blue-600">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>搜索</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-plus"></i>
+          <span>发布</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-heart"></i>
+          <span>喜欢</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 发布作品页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area bg-white">
+        <div class="flex items-center justify-between px-4 py-3 border-b">
+          <button class="text-gray-400 font-semibold">取消</button>
+          <span class="font-bold text-lg">发布作品</span>
+          <button class="text-blue-500 font-semibold">发布</button>
+        </div>
+        <div class="px-4 py-6">
+          <div class="border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center py-8 mb-4 cursor-pointer">
+            <i class="fa-solid fa-camera text-3xl text-gray-400 mb-2"></i>
+            <div class="text-gray-400">点击上传作品照片</div>
+            <div class="text-xs text-gray-300 mt-1">支持 JPG、PNG 格式</div>
+          </div>
+          <input type="text" class="w-full border rounded-lg px-3 py-2 mb-3 text-sm" placeholder="请输入作品名称">
+          <textarea class="w-full border rounded-lg px-3 py-2 mb-3 text-sm" rows="3" placeholder="描述一下这件作品..."></textarea>
+          <input type="text" class="w-full border rounded-lg px-3 py-2 mb-3 text-sm" placeholder="添加标签，用空格分隔">
+          <select class="w-full border rounded-lg px-3 py-2 text-sm">
+            <option>花瓶</option>
+            <option>茶具</option>
+            <option>彩绘</option>
+            <option>窑变</option>
+          </select>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>搜索</span>
+        </div>
+        <div class="flex flex-col items-center text-blue-600">
+          <i class="fa-solid fa-plus"></i>
+          <span>发布</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-heart"></i>
+          <span>喜欢</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 拍卖页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">云拍卖场</span>
+          <button class="text-gray-500"><i class="fa-solid fa-gavel fa-lg"></i></button>
+        </div>
+        <div class="overflow-y-auto h-[500px] pb-4">
+          <!-- 拍品卡片1 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=600&q=80" alt="拍品1" class="rounded-t-2xl w-full h-40 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">宋代定窑白瓷碗</div>
+              <div class="text-gray-500 text-sm mt-1">起拍价：¥10,000</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-xs text-red-500"><i class="fa-regular fa-clock mr-1"></i>剩余：02:15:23</span>
+                <button class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">参与竞拍</button>
+              </div>
+            </div>
+          </div>
+          <!-- 拍品卡片2 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="拍品2" class="rounded-t-2xl w-full h-40 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">清乾隆粉彩瓶</div>
+              <div class="text-gray-500 text-sm mt-1">起拍价：¥50,000</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-xs text-green-500"><i class="fa-regular fa-clock mr-1"></i>即将开始</span>
+                <button class="bg-gray-200 text-gray-500 px-3 py-1 rounded-full text-xs font-semibold cursor-not-allowed">未开始</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 展览页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">云展览厅</span>
+          <button class="text-gray-500"><i class="fa-solid fa-image fa-lg"></i></button>
+        </div>
+        <div class="overflow-y-auto h-[500px] pb-4">
+          <!-- 展览卡片1 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="展览1" class="rounded-t-2xl w-full h-40 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">瓷韵千年展</div>
+              <div class="text-gray-500 text-sm mt-1">2024.5.1 - 2024.6.1</div>
+              <div class="text-gray-400 text-xs mt-1">展现中国瓷器千年演变与美学。</div>
+              <button class="mt-3 bg-blue-500 text-white px-4 py-1 rounded-full text-xs font-semibold">进入展览</button>
+            </div>
+          </div>
+          <!-- 展览卡片2 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80" alt="展览2" class="rounded-t-2xl w-full h-40 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">现代陶艺创新展</div>
+              <div class="text-gray-500 text-sm mt-1">2024.6.10 - 2024.7.10</div>
+              <div class="text-gray-400 text-xs mt-1">聚焦当代陶艺创新与跨界合作。</div>
+              <button class="mt-3 bg-blue-500 text-white px-4 py-1 rounded-full text-xs font-semibold">进入展览</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 我的账号页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area bg-white">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">我的账号</span>
+          <button class="text-gray-500"><i class="fa-solid fa-user fa-lg"></i></button>
+        </div>
+        <div class="p-5 flex flex-col items-center bg-white rounded-b-3xl">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-20 h-20 rounded-full border-4 border-red-100 shadow mb-2" alt="头像">
+          <div class="font-bold text-lg">瓷友小张</div>
+          <div class="text-xs text-gray-400 mt-1">等级：VIP 3</div>
+        </div>
+        <div class="mt-4 px-4">
+          <div class="grid grid-cols-3 gap-4">
+            <a href="#" class="flex flex-col items-center bg-white rounded-xl shadow p-3">
+              <i class="fa-solid fa-gavel text-red-500 text-xl mb-1"></i>
+              <span class="text-xs">我的拍卖</span>
+            </a>
+            <a href="#" class="flex flex-col items-center bg-white rounded-xl shadow p-3">
+              <i class="fa-solid fa-box text-blue-500 text-xl mb-1"></i>
+              <span class="text-xs">我的订单</span>
+            </a>
+            <a href="#" class="flex flex-col items-center bg-white rounded-xl shadow p-3">
+              <i class="fa-solid fa-heart text-pink-500 text-xl mb-1"></i>
+              <span class="text-xs">我的收藏</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 产品推荐页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">产品推荐</span>
+          <button class="text-gray-500"><i class="fa-solid fa-star fa-lg"></i></button>
+        </div>
+        <div class="flex justify-around bg-white py-2 border-b">
+          <button class="text-red-600 font-semibold">本日</button>
+          <button class="text-gray-400">本周</button>
+          <button class="text-gray-400">本月</button>
+        </div>
+        <div class="overflow-y-auto h-[470px] pb-4">
+          <!-- 推荐卡片1 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="推荐1" class="rounded-t-2xl w-full h-40 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">青花龙纹盘</div>
+              <div class="text-gray-500 text-sm mt-1">本日精选，龙纹祥瑞，收藏佳品。</div>
+              <button class="mt-3 text-red-500"><i class="fa-regular fa-heart"></i> 收藏</button>
+            </div>
+          </div>
+          <!-- 推荐卡片2 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="推荐2" class="rounded-t-2xl w-full h-40 object-cover">
+            <div class="p-4">
+              <div class="font-semibold text-lg">粉彩牡丹瓶</div>
+              <div class="text-gray-500 text-sm mt-1">色彩明快，牡丹富贵，艺术典范。</div>
+              <button class="mt-3 text-red-500"><i class="fa-regular fa-heart"></i> 收藏</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 艺术家专区页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">艺术家专区</span>
+          <button class="text-gray-500"><i class="fa-solid fa-user-pen fa-lg"></i></button>
+        </div>
+        <div class="overflow-y-auto h-[500px] pb-4">
+          <!-- 艺术家卡片1 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3 flex items-center p-4">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="艺术家1" class="w-16 h-16 rounded-full object-cover mr-4">
+            <div class="flex-1">
+              <div class="font-semibold text-lg">李明</div>
+              <div class="text-gray-500 text-sm mt-1">景德镇陶瓷艺术家，擅长青花瓷创新。</div>
+            </div>
+            <button class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fa-solid fa-plus mr-1"></i>关注</button>
+          </div>
+          <!-- 艺术家卡片2 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3 flex items-center p-4">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="艺术家2" class="w-16 h-16 rounded-full object-cover mr-4">
+            <div class="flex-1">
+              <div class="font-semibold text-lg">王芳</div>
+              <div class="text-gray-500 text-sm mt-1">现代陶艺家，作品多次获奖。</div>
+            </div>
+            <button class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fa-solid fa-plus mr-1"></i>关注</button>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 品牌馆页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">品牌馆</span>
+          <button class="text-gray-500"><i class="fa-solid fa-building fa-lg"></i></button>
+        </div>
+        <div class="overflow-y-auto h-[500px] pb-4">
+          <!-- 品牌卡片1 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3 flex items-center p-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Logo_of_Jingdezhen_China.png/120px-Logo_of_Jingdezhen_China.png" alt="品牌1" class="w-16 h-16 rounded-full object-cover mr-4 bg-gray-100">
+            <div class="flex-1">
+              <div class="font-semibold text-lg">景德镇瓷厂</div>
+              <div class="text-gray-500 text-sm mt-1">百年品牌，传承与创新并重。</div>
+            </div>
+            <button class="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold">进入</button>
+          </div>
+          <!-- 品牌卡片2 -->
+          <div class="bg-white rounded-2xl shadow mb-4 mx-3 flex items-center p-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Logo_of_China_National_Ceramics.png/120px-Logo_of_China_National_Ceramics.png" alt="品牌2" class="w-16 h-16 rounded-full object-cover mr-4 bg-gray-100">
+            <div class="flex-1">
+              <div class="font-semibold text-lg">中国陶瓷集团</div>
+              <div class="text-gray-500 text-sm mt-1">中国陶瓷行业龙头企业。</div>
+            </div>
+            <button class="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold">进入</button>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+    <!-- 个人中心页面 -->
+    <section class="iphone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi ml-2"></i>
+          <i class="fa-solid fa-battery-full ml-2"></i>
+        </div>
+      </div>
+      <div class="content-area bg-white">
+        <div class="flex items-center justify-between px-4 py-3 bg-white shadow-sm rounded-t-3xl">
+          <span class="text-lg font-bold text-red-600">个人中心</span>
+          <button class="text-gray-500"><i class="fa-solid fa-gear fa-lg"></i></button>
+        </div>
+        <div class="p-5 flex flex-col items-center bg-white rounded-b-3xl">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-20 h-20 rounded-full border-4 border-blue-100 shadow mb-2" alt="头像">
+          <div class="font-bold text-lg">瓷友小李</div>
+          <div class="text-xs text-gray-400 mt-1">等级：VIP 2</div>
+        </div>
+        <div class="mt-4 px-4 flex flex-col gap-3">
+          <a href="#" class="flex items-center bg-white rounded-xl shadow p-4">
+            <i class="fa-solid fa-user text-blue-500 text-xl mr-3"></i>
+            <span class="flex-1">个人信息</span>
+            <i class="fa-solid fa-chevron-right text-gray-300"></i>
+          </a>
+          <a href="#" class="flex items-center bg-white rounded-xl shadow p-4">
+            <i class="fa-solid fa-box text-green-500 text-xl mr-3"></i>
+            <span class="flex-1">我的订单</span>
+            <i class="fa-solid fa-chevron-right text-gray-300"></i>
+          </a>
+          <a href="#" class="flex items-center bg-white rounded-xl shadow p-4">
+            <i class="fa-solid fa-heart text-pink-500 text-xl mr-3"></i>
+            <span class="flex-1">我的收藏</span>
+            <i class="fa-solid fa-chevron-right text-gray-300"></i>
+          </a>
+          <a href="#" class="flex items-center bg-white rounded-xl shadow p-4">
+            <i class="fa-solid fa-arrow-right-from-bracket text-red-500 text-xl mr-3"></i>
+            <span class="flex-1">退出登录</span>
+            <i class="fa-solid fa-chevron-right text-gray-300"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-house"></i>
+          <span>首页</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-gavel"></i>
+          <span>拍卖</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-image"></i>
+          <span>展览</span>
+        </div>
+        <div class="flex flex-col items-center text-red-600">
+          <i class="fa-solid fa-user"></i>
+          <span>我的</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html> 
